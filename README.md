@@ -8,6 +8,10 @@ A/B/C/Dの設問に答えることで、自分専用の `SONG DIRECTION SYSTEM.m
 
 - QUICK MODE: 17問。短時間で実用的な制作ルールを作成
 - DEEP MODE: 分岐式。制作思想、物語、映像、声、音、Suno実装、More Options、レビューまで詳細に設計
+- v0.5では「構成 / 感情 / 情景 / 物語性 / 完成感 / 起伏 / 現実感 / ボーカル明瞭度」を独立軸として選択可能
+- 回答した制作軸を勝手に連動させない設計
+- 日常・現実寄りの作品が不要に幻想化していないかQA
+- 改善目的の修正と、一変数テストによる原因検証を区別
 - 回答内容はブラウザ内で処理
 - 生成MDを保存可能
 - Styles / Exclude はカンマ区切り形式に対応
@@ -16,9 +20,9 @@ A/B/C/Dの設問に答えることで、自分専用の `SONG DIRECTION SYSTEM.m
 
 ## 使い方
 
-GitHub Pagesで公開した場合は、ページを開いてそのまま使えます。
+GitHub Pagesで公開したページを開いて、そのまま使えます。
 
-ローカルで使う場合は `index.html` をブラウザで開いてください。
+QUICKは手軽に、DEEPはより細かく自分の制作思想を設計できます。
 
 ## Privacy
 
@@ -26,7 +30,7 @@ GitHub Pagesで公開した場合は、ページを開いてそのまま使え�
 
 ## Version
 
-Builder v0.4 / JACKPOT031 SONG DIRECTION SYSTEM v2.2 base
+Builder v0.5 / JACKPOT031 SONG DIRECTION SYSTEM v2.2 base
 
 ## Author
 
