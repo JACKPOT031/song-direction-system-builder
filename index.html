@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SONG DIRECTION SYSTEM BUILDER v0.4 — v2.2 ADAPTIVE</title>
+<title>SONG DIRECTION SYSTEM BUILDER v0.5 — v2.2 ADAPTIVE</title>
 <style>
 :root{
   --bg:#0d0f14; --panel:#151922; --panel2:#1b2030; --text:#eef2ff; --muted:#9ea7bd;
@@ -54,7 +54,7 @@ input,select,textarea{width:100%;background:#0f131c;border:1px solid var(--line)
     <div>
       <h2>「自分はどう曲を作る人か」を、質問から言語化する。</h2>
       <p>ジャンルやプロンプトを作るだけではなく、歌詞の扱い、物語、映像、声、音、構造、Suno実装、生成後の修正まで含めた“あなた専用の制作システム”をMarkdownで生成します。</p>
-      <div class="badges"><span class="badge">A/B/C/D式</span><span class="badge">QUICK / DEEP</span><span class="badge">単一HTML</span><span class="badge">オフライン動作</span><span class="badge">MD保存</span><span class="badge">v2.2 BASE</span><span class="badge">ADAPTIVE BRANCH</span></div>
+      <div class="badges"><span class="badge">A/B/C/D式</span><span class="badge">QUICK / DEEP</span><span class="badge">単一HTML</span><span class="badge">オフライン動作</span><span class="badge">MD保存</span><span class="badge">v2.2 TECH BASE</span><span class="badge">ADAPTIVE BRANCH</span></div>
       <div class="form">
         <div class="field"><label>クリエイター名</label><input id="creator" value="MYNAME" /></div>
         <div class="field"><label>システム名</label><input id="systemName" value="MYNAME SONG DIRECTION SYSTEM" /></div>
@@ -65,8 +65,8 @@ input,select,textarea{width:100%;background:#0f131c;border:1px solid var(--line)
     </div>
     <div class="mode-grid">
       <button class="mode active" data-mode="quick"><strong>QUICK MODE</strong><span>17問。主要な制作思想だけ選び、未回答部分はv2.2の実用ルール・生成プリセットで補完して使えるMDを作ります。</span></button>
-      <button class="mode" data-mode="deep"><strong>DEEP ADAPTIVE</strong><span>基本70問＋条件付き深掘り（最大85問）。回答内容に応じて不要な設問を飛ばし、More Options・WILD CARD・DRAFT・Generation Stampまで追加で深掘りします。</span></button>
-      <div class="notice">JACKPOT031 SONG DIRECTION SYSTEM v2.2を母型にしています。QUICKは固定17問、DEEPは回答によって質問ルートが変わる適応型です。v2.2のMore Options推奨、WILD CARD、DRAFT CHECK、GENERATION STAMP、一変数テストも生成MDへ反映します。</div>
+      <button class="mode" data-mode="deep"><strong>DEEP ADAPTIVE</strong><span>基本70問＋条件付き深掘り（最大約95問）。構成・感情・情景・物語性・完成感・起伏などを独立して選び、回答内容に応じて不要な設問を飛ばします。</span></button>
+      <div class="notice">JACKPOT031 SONG DIRECTION SYSTEM v2.2の技術ルールを土台にしつつ、創作思想は回答者ごとに独立して組み立てます。QUICKは固定17問、DEEPは適応型。DEEPでは構成・感情・情景・物語性・完成感・起伏・現実感・声の明瞭度を互いに連動させず選べます。</div>
     </div>
   </section>
 
@@ -99,7 +99,7 @@ input,select,textarea{width:100%;background:#0f131c;border:1px solid var(--line)
     <div class="card preview"><h3>Markdown Preview</h3><textarea id="mdPreview"></textarea></div>
   </section>
 
-  <div class="footer">SONG DIRECTION SYSTEM BUILDER v0.4 — ADAPTIVE / JACKPOT031 v2.2 BASE</div>
+  <div class="footer">SONG DIRECTION SYSTEM BUILDER v0.5 — INDEPENDENT AXES / v2.2 TECH BASE</div>
 </div>
 <script>
 const O=(title,desc,rule)=>({title,desc,rule});
@@ -176,8 +176,17 @@ const questions=[
 {n:70,c:'SYSTEM DESIGN',t:'生成するシステムMD自体は、どのくらい詳しくする？',l:'1ファイル完結と短さのバランス。',o:[O('短くする','300〜400行程度を目標。','システムMDは思想と実行ルールへ絞り、短く保つ。'),O('1ファイル完結を優先、必要なら長くてよい','重複だけ削る。','システムMDは一ファイル完結を優先し、必要なルールは長くても保持する。'),O('COREとDETAILへ2分割','普段用と詳細用。','システムを短いCOREと詳細REFERENCEの二ファイルへ分割する。'),O('一定の長さへ収める','700〜800行程度。','情報量を一定範囲に収め、過度に長文化しない。')]}
 ];
 
-// v0.4: 回答によってだけ現れる追加質問。
+// v0.5: 回答によってだけ現れる追加質問＋独立制作軸。
 const adaptiveQuestions=[
+{n:'P1',after:5,c:'CREATIVE AXIS — STRUCTURE',t:'曲の構成は、どの方針を重視する？',l:'物語性や感情変化とは独立して、構成そのものの好みを決めます。',when:()=>true,o:[O('定型構成を重視','Verse / Chorus等の分かりやすさを優先。','曲構成はVerse / Pre-Chorus / Chorus等の定型と反復の分かりやすさを重視する。'),O('歌詞に合わせる','歌詞の呼吸・長さ・意味を優先。','曲構成は定型へ押し込まず、歌詞の長さ・言葉の呼吸・意味のまとまりへ合わせる。'),O('自由構成を重視','必要なら非定型・連続構成も使う。','曲構成は自由度を高くし、作品に必要なら非定型構成・連続構成・変則反復を積極的に使う。'),O('曲ごとに判断','固定した構成思想を持たない。','構成方針は作品ごとに判断し、定型・歌詞主導・自由構成を使い分ける。')]},
+{n:'P2',after:5.01,c:'CREATIVE AXIS — EMOTION',t:'感情の動きは、どのくらい必要？',l:'物語の濃さとは独立して、感情の振れ幅だけを選びます。',when:()=>true,o:[O('大きな感情変化','明確な感情アークを作る。','感情は曲中で大きく変化し、前半と後半で明確な心理状態の差を作る。'),O('緩やかな変化','小さな揺れや深化を重視。','感情は急激に反転させず、緩やかな揺れ・深化・にじみを重視する。'),O('一定の感情を保つ','変化より状態の持続を重視。','感情は大きく変化させず、一つの感情状態や温度を保つこと自体を作品の価値として認める。'),O('曲ごとに判断','感情変化を固定しない。','感情の振れ幅は作品ごとに決め、大きな変化・小さな変化・ほぼ一定を使い分ける。')]},
+{n:'P3',after:5.02,c:'CREATIVE AXIS — SCENERY',t:'情景は、どのくらい具体的に描きたい？',l:'物語性とは別に、場所や風景の具体度を選びます。',when:()=>true,o:[O('具体的な情景','場所・時間・温度・物を具体化。','情景は場所・時間帯・季節・温度・光・見える物まで具体的に描写する。'),O('具体と抽象を混ぜる','核だけ具体化し余白を残す。','重要な場所や物だけ具体化し、それ以外は抽象的な印象や余白を残す。'),O('抽象的な印象','場所より色・気配・質感を重視。','情景は具体的な場所説明より、色・空気・距離・質感・気配など抽象的印象を重視する。'),O('情景を重視しない','音・言葉・構造を優先。','情景描写は必須とせず、作品によっては音・言葉・構造だけで成立させる。')]},
+{n:'P4',after:5.03,c:'CREATIVE AXIS — NARRATIVE DENSITY',t:'物語性は、どのくらい必要？',l:'感情や情景とは連動させず、出来事の密度だけを決めます。',when:()=>true,o:[O('起承転結を重視','出来事が進行する物語を作る。','曲中で出来事が進行し、因果や転換を持つ明確な物語を重視する。'),O('断片的な物語','出来事はあるが説明しすぎない。','物語は断片・記憶・場面の連なりとして見せ、完全な起承転結を必須にしない。'),O('物語は薄くてよい','一場面・一状態の切り取りを認める。','大きな出来事や成長を必須にせず、一場面・一感情・一瞬の状態を切り取る曲を積極的に認める。'),O('物語なしでもよい','言葉・音・感触だけでも成立。','物語性を必須にせず、言葉・音・反復・雰囲気・身体感覚だけで成立する作品を認める。')]},
+{n:'P5',after:5.04,c:'CREATIVE AXIS — SONG COMPLETION',t:'「曲として良い」と感じるとき、何を最優先する？',l:'ここでは“完成度”を、何を良い曲と感じるかの基準として選びます。',when:()=>true,o:[O('まとまり・聴きやすさ','一曲として自然に聴けることを優先。','曲としてのまとまり、聴きやすさ、各要素の整合感を最優先する。'),O('独創性','その人・その曲にしかない個性を優先。','一般的な聴きやすさより、その作品固有の発想・音・構造・声の個性を優先する。'),O('実験性','未知の結果や攻めた構造を優先。','完成の安定感より、実験性・予想外の展開・新しい音響体験を優先する。'),O('バランス','まとまり・個性・実験性の均衡。','聴きやすさ、独創性、実験性のどれか一つへ偏らず、作品ごとの最適なバランスを探す。')]},
+{n:'P6',after:5.05,c:'CREATIVE AXIS — DYNAMIC CONTOUR',t:'曲の起伏は、どのくらい欲しい？',l:'物語や感情と独立して、音量・密度・エネルギーの輪郭を決めます。',when:()=>true,o:[O('大きな起伏','明確な静→動やピークを作る。','音量・密度・エネルギーに大きな起伏を作り、明確なピークと落差を重視する。'),O('緩やかな起伏','少しずつ変化する。','大きな爆発より、密度・音域・距離・リズムが緩やかに変わる構成を重視する。'),O('平坦・低起伏','一定の温度を保つ。','大きな盛り上がりを必須にせず、低起伏・一定密度・静かな持続を作品として成立させる。'),O('曲ごとに判断','起伏の大きさを固定しない。','曲の起伏は作品ごとに決め、大きな起伏・緩やかな変化・平坦な展開を使い分ける。')]},
+{n:'P7',after:5.06,c:'CREATIVE AXIS — REALITY GROUNDING',t:'世界観の現実感は、どのくらい保ちたい？',l:'日常の歌が、意図せず幻想世界へ寄るのを防ぐための独立軸です。',when:()=>true,o:[O('生活感・現実感を強く保つ','身近な現代の空気を優先。','世界観は日常生活・現代性・身近な物理空間を強く保ち、意図のない幻想化・神秘化・異世界化を避ける。'),O('現実ベース＋少し詩的','日常に軽い比喩や余韻を加える。','現実の場所・生活感を基礎にしつつ、光・空気・音の詩的表現を適度に許可する。'),O('幻想・象徴を積極利用','現実を超える表現を歓迎。','夢・幻想・象徴・異世界的な音響や情景への変換を積極的に許可する。'),O('曲ごとに判断','現実感の強さを固定しない。','現実感・幻想性の比率は曲固有の世界観と作者意図から判断する。')]},
+{n:'P8',after:5.07,c:'CREATIVE AXIS — VOCAL PRESENCE',t:'歌声の明瞭さと空気感、どちらを優先する？',l:'静かな曲でも、声を奥へ置くとは限りません。歌詞の聴き取りやすさを独立して決めます。',when:()=>true,o:[O('言葉の明瞭さを最優先','声を前に置き歌詞を聴かせる。','主声は前面・明瞭・過度に濡らさない方向を基本とし、歌詞の聴き取りやすさを優先する。'),O('明瞭さと空気感を両立','声は読めるが空間も残す。','歌詞の明瞭度を保ちながら、必要な残響・距離・空気感をバランスさせる。'),O('空気感・残響を優先','声も音響の一部として溶かす。','歌詞の完全な明瞭さより、残響・距離・音場への溶け込みを優先する。'),O('曲ごとに判断','声の位置を固定しない。','主声の明瞭度・距離・残響量は作品ごとの目的に合わせて決める。')]},
+{n:'P9',after:5.08,c:'CREATIVE AXIS — SONG OVERRIDE',t:'自分の普段の制作ルールと、その曲固有の意図がぶつかったら？',l:'普段は穏やか、ミュージカルでは物語重視、のような作品差を許容するためのルールです。',when:()=>true,o:[O('曲固有の意図を最優先','個人ルールはデフォルトに留める。','個人の制作思想はデフォルトとして扱い、曲ごとに明示された世界観・企画・作者意図がある場合は曲固有条件を優先する。'),O('個人ルールを優先','どの曲でも自分らしさを維持。','曲固有の希望があっても、個人の制作思想を上位に置き、逸脱を最小限にする。'),O('衝突時だけ確認','自動で決めない。','個人ルールと曲固有意図が明確に衝突した場合は、AIが勝手に優先順位を決めず確認する。'),O('両立案を優先','まず双方を成立させる。','個人ルールと曲固有意図の両立を最初に探し、どうしても両立しない場合のみ曲固有意図を優先する。')]},
 {n:'1A',after:1,c:'VISUAL DEEP DIVE',t:'映像と音は、どのくらい同じ動きをするべき？',l:'映像を重視する人向けの追加設問。音と画の同期／対立の思想を決めます。',when:()=>[0,1,3].includes(answers[1]),o:[O('基本的に同期','画と音の変化を同じ場所で起こす。','重要な映像変化と音楽変化は基本的に同じタイミングで連動させる。'),O('重要場面だけ同期','普段は独立、要所だけ噛み合わせる。','映像と音は独立して動かし、STORY EVENTやKEY MOMENTなど重要場面だけ強く同期させる。'),O('あえてズラすことも重視','映像と音の不一致を演出に使う。','映像と音の感情やタイミングを意図的にずらし、違和感や二重意味を作ることを許可する。'),O('曲ごとに自由','同期率を作品ごとに変える。','映像と音の同期／非同期の程度は作品ごとに最適化する。')]},
 {n:'2A',after:2,c:'STORY DEEP DIVE',t:'AIが追加した大胆な演出仮説は、どう扱う？',l:'歌詞外の物語補完を積極的に許可した人向け。仮説の確定方法を決めます。',when:()=>[2,3].includes(answers[2]),o:[O('台本承認までは必ず仮説','承認後にのみ作品設定へ昇格。','AIが追加した大胆な設定は完成台本の承認まではSTAGING HYPOTHESISとして扱い、承認後にのみ採用設定とする。'),O('強い推論なら仮確定','自然に読めるものは先に使う。','歌詞と作者意図から強く支持される補完は仮確定として設計に使用し、大胆な部分だけ仮説表示する。'),O('候補を複数残す','確定を遅らせる。','大胆な補完は一つに決めず、複数の演出仮説を保持して台本段階で比較する。'),O('AIにかなり任せる','完成度を優先。','作品の核を壊さない範囲ではAIが最善と判断した演出仮説を積極的に採用する。')]},
 {n:'16A',after:16,c:'VOICE DEEP DIVE',t:'複数の声の“位置”にも物語上の意味を持たせる？',l:'主要な声を人物・感情として扱う人向け。空間配置まで演出するかを決めます。',when:()=>[0,2].includes(answers[16]),o:[O('位置まで厳密に意味づけ','近い／遠い／左右／背後まで役割化。','複数声の距離・方向・前後関係まで物語上の意味を持たせる。'),O('距離感だけ重視','方向は実装に任せる。','声の近い／遠い、前景／背景は設計するが、左右など細かな空間位置は必須にしない。'),O('人物関係だけ意味づけ','空間は音響効果。','声同士の人格・関係性を設計し、空間配置そのものは音響上の自由度として扱う。'),O('曲ごとに自由','空間演出が重要な曲だけ。','複数声の空間配置は作品の必要性に応じて使用する。')]},
@@ -192,6 +201,7 @@ const adaptiveQuestions=[
 
 {n:'58B',after:58,c:'MORE OPTIONS ADJUST',t:'生成結果に応じてMore Optionsを自動補正する？',l:'Weirdness / Style Influence / Varietyの調整権限。',when:()=>isSunoTarget(),o:[O('自動で小さく補正','±10%・1段階ずつ。','生成レビューからMORE-OPTIONSが原因と判断した場合、Weirdness / Style Influenceは±10%程度、Varietyは1段階ずつ自動補正してよい。'),O('変更案だけ提示','実変更はユーザー承認後。','More Optionsの推奨変更値は提示するが、次回設定へ反映する前にユーザー承認を求める。'),O('必要なら複数項目を同時調整','高速探索を優先。','原因が複合的と判断した場合、複数のMore Optionsを同時に変更して探索してよい。'),O('自動補正しない','固定プリセットを維持。','More Optionsは選択した基準プリセットを固定し、生成結果による自動補正を行わない。')]},
 {n:'58C',after:58,c:'EXPERIMENT METHOD',t:'More Optionsの効果検証は一変数テストを重視する？',l:'何が効いたのか追跡する精度。',when:()=>isSunoTarget() && answers['58B']!==3,o:[O('原則1変数だけ変える','原因追跡を最優先。','More Optionsの比較検証では、原則として一回の比較につき主要設定を一つだけ変更する。'),O('1変数を基本、関連項目はまとめてもよい','実務とのバランス。','一変数テストを基本とするが、同一根本原因に属する密接な設定は理由を明記してまとめて変更できる。'),O('複数変更を積極利用','探索速度を優先。','原因追跡より探索速度を優先し、複数のMore Optionsを同時に動かす比較も積極的に使用する。'),O('比較方法を固定しない','曲ごとに判断。','一変数テストを原則化せず、作品と検証目的に応じて比較方法を選ぶ。')]},
+{n:'58E',after:58.025,c:'DIAGNOSTIC METHOD',t:'不具合修正の検証では、Styles / Exclude / More Optionsを同時に変える？',l:'改善速度と「何が効いたか」の追跡性を分けて考えます。',when:()=>isSunoTarget(),o:[O('原則1レイヤーずつ','原因追跡を最優先。','診断目的の比較では、Styles・Exclude・More Optionsなど異なるレイヤーを同時に変更せず、原則1レイヤーずつ検証する。'),O('同一原因ならまとめてよい','改善と追跡のバランス。','同じ根本原因へ対処する場合はStylesとExcludeなど関連レイヤーをまとめて変更できるが、変更点を明記し因果が分離できないことも記録する。'),O('改善速度を優先','必要なら複数レイヤーを同時変更。','厳密な原因追跡より改善速度を優先し、必要ならStyles・Exclude・More Optionsを同時に変更してよい。'),O('目的で切り替える','診断テストと改善テストを分ける。','原因を特定したい比較では1レイヤーずつ変更し、完成度を早く上げる改善パスでは複数レイヤー変更を許可する。')]},
 {n:'58D',after:58,c:'GENERATION STAMP',t:'Generation Stampをどこまで残す？',l:'Model / Take / Lyrics / Styles / Exclude / More Optionsの記録密度。',when:()=>isSunoTarget(),o:[O('すべての生成で必須','DRAFT含め追跡する。','PRIMARY / EXPERIMENTAL / WILD CARD / DRAFTを含む各生成結果にGENERATION STAMPを残す。'),O('本番生成だけ必須','DRAFTは簡略化。','PRIMARY / EXPERIMENTAL / WILD CARDの本番生成にはGENERATION STAMPを必須とし、DRAFTは簡略記録でよい。'),O('採用候補だけ記録','管理量を減らす。','良かったTakeや比較対象として残す生成だけGENERATION STAMPを記録する。'),O('任意','必要時だけ記録。','GENERATION STAMPは必須とせず、検証したい作品や設定だけ記録する。')]},
 {n:'58A',after:58,c:'REVIEW DEEP DIVE',t:'偶然うまく出た生成結果は、ルールへ取り込む？',l:'生成後レビューを自動化する人向け。偶然の成功をどう学習材料にするか。',when:()=>answers[58]!==undefined && [0,1].includes(answers[58]),o:[O('再現理由が推測できれば取り込む','偶然を仮説化する。','偶然良かった結果は原因を分析し、再現可能な仮説が立つ場合だけ次回ルールへ取り込む。'),O('良ければ積極的に取り込む','結果優先。','意図外でも作品として良ければ、次回のStyles・メタタグ・構造へ積極的に反映する。'),O('作品固有の偶然として保存','一般ルールにはしない。','偶然良かった結果はその作品のREVISION LOGへ保存するが、制作システム全体の原則には昇格させない。'),O('原則取り込まない','設計意図を優先。','偶然の成功より事前設計の再現性を優先し、システムルールへの反映は最小限にする。')]},
 {n:'68A',after:68,c:'QA DEEP DIVE',t:'QAで“個性が薄い”と判断した場合、自動で攻め直す？',l:'厳格QAを選んだ人向け。技術的に正しくても普通すぎる出力をどう扱うか。',when:()=>isSunoTarget() && answers[68]===0,o:[O('自動で再設計する','普通すぎるなら出す前に直す。','QAで作品固有性が弱いと判断した場合、王道破壊・声・構造・Exclude等を再点検し、出力前に自動修正する。'),O('警告だけ出す','ユーザーに選ばせる。','技術QAは自動修正するが、個性不足は警告として示し、攻め直すかはユーザーに委ねる。'),O('実験版だけ攻め直す','PRIMARYは安定優先。','個性不足があってもPRIMARYは保持し、EXPERIMENTALのみ再設計して差を作る。'),O('個性はQA対象にしない','生成結果で判断。','QAでは矛盾・文字数・形式のみ確認し、個性の強さは生成後レビューへ委ねる。')]}
@@ -218,8 +228,8 @@ function activeList(){
   const extra=mode==='deep'?adaptiveQuestions.filter(shouldAsk):[];
   return [...base,...extra].sort((a,b)=>orderValue(a)-orderValue(b));
 }
-function saveProgress(){localStorage.setItem('sds_builder_progress_v04',JSON.stringify({mode,idx,currentId:list[idx]?.n,answers,creator:$('#creator').value,systemName:$('#systemName').value,target:$('#target').value,version:$('#version').value}));}
-function loadProgress(){try{return JSON.parse(localStorage.getItem('sds_builder_progress_v04')||'null')}catch(e){return null}}
+function saveProgress(){localStorage.setItem('sds_builder_progress_v05',JSON.stringify({mode,idx,currentId:list[idx]?.n,answers,creator:$('#creator').value,systemName:$('#systemName').value,target:$('#target').value,version:$('#version').value}));}
+function loadProgress(){try{return JSON.parse(localStorage.getItem('sds_builder_progress_v05')||'null')}catch(e){return null}}
 function begin(reset=true){
   if(reset){idx=0;answers={};}
   list=activeList(); idx=Math.min(idx,Math.max(0,list.length-1));
@@ -270,9 +280,9 @@ function generateMd(){
     return chosen(q)?.title||def;
   };
 
-  let md=`# ${sys}\n## 歌詞と作者意図から、物語・感情・声・音・構造を設計し、AI楽曲制作へ変換する個人用楽曲演出システム\n\n`;
+  let md=`# ${sys}\n## 歌詞と作者意図から、構成・感情・情景・物語性・声・音など本人が重視する軸を使ってAI楽曲制作へ変換する個人用システム\n\n`;
   md+=`**Version:** ${ver}\n**Date:** ${today}\n**Owner:** ${creator}\n**Default Target:** ${target}\n**Build Mode:** ${mode==='deep'?'DEEP ADAPTIVE':'QUICK'}\n**Base Architecture:** JACKPOT031 SONG DIRECTION SYSTEM v2.2\n\n`;
-  md+=`**Purpose:** このファイルは、${creator}の制作思想と判断基準をAIへ伝え、ユーザーが自分の歌詞、ライナーノーツ、背景、簡単な希望を入力するだけで、楽曲の演出台本と実装データを一貫して設計するための固定システム定義書である。\n\n`;
+  md+=`**Purpose:** このファイルは、${creator}の制作思想と判断基準をAIへ伝え、構成・感情・情景・物語性・完成感・起伏などを互いに独立した軸として扱いながら、歌詞と曲固有の意図に合う楽曲設計と実装データを作るための固定システム定義書である。\n\n`;
 
   md+=`---\n\n# 0. このファイルの使い方\n\n`;
   md+=`1. このMDをChatGPT等へアップロードする。\n`;
@@ -282,12 +292,18 @@ function generateMd(){
   md+=`5. 台本を確認・承認した後、AI楽曲制作向けの実装データへ変換する。\n`;
   md+=`6. 生成後は自由文で感想を伝え、レビューと修正へ進む。\n\n`;
   if(mode==='quick'){
-    md+=`> QUICK MODEで未回答の詳細項目は、JACKPOT031 SONG DIRECTION SYSTEM v2.2の実用的な既定値を採用する。必要になったらDEEP MODEで再生成できる。\n\n`;
+    md+=`> QUICK MODEで未回答の**創作思想**は固定せず「曲ごとに判断」を基本とする。文字数上限、カンマ区切り、コピー形式、QAなどの**技術ルールのみ**JACKPOT031 SONG DIRECTION SYSTEM v2.2の実用値を継承する。必要になったらDEEP MODEで再生成できる。\n\n`;
   }
 
   md+=`# 1. 制作思想サマリー\n\n`;
   keySummary().forEach(x=>md+=`- ${x}\n`);
   md+=`\n`;
+
+  md+=`# 1.5 独立制作軸の原則\n\n`;
+  md+=`- 構成、感情、情景、物語性、曲としての完成感、起伏、現実感、ボーカル明瞭度は**互いに独立した判断軸**として扱う。\n`;
+  md+=`- 「物語性が高いから感情変化も大きくする」「静かな曲だから声を遠くする」「情景が具体的だから起伏も小さくする」など、回答されていない連動をAIが勝手に作らない。\n`;
+  md+=`- 個人用SYSTEMの制作思想はデフォルトであり、曲ごとの明示的な世界観・企画・作者意図が優先されるかどうかはSONG OVERRIDEの回答に従う。\n`;
+  md+=`- 一場面を切り取る歌、感情がほぼ一定の歌、物語が薄い歌、低起伏の歌も、選択された制作思想なら完成形として認める。\n\n`;
 
   md+=`# 2. 入力情報と優先順位\n\n`;
   md+=`- 作者本人の明示的な固定条件・禁止条件を最優先する。\n`;
@@ -311,14 +327,15 @@ function generateMd(){
   md+=`- ${p66}\n\n`;
 
   md+=`# 4. 曲の設計順序\n\n`;
-  md+=`原則として、**歌詞 → 物語・感情・SCENE設計 → 音楽構造 → 実装**の順で進める。\n\n`;
+  md+=`原則として、**歌詞・曲固有の意図 → 選択された独立制作軸 → 必要な設計 → 実装**の順で進める。\n\n`;
   const p5=answerOf(5);
   if(p5) md+=`- ${p5}\n`;
-  md+=`- いきなりStylesやメタタグを作らず、まず作品の核、出来事、人物、視点、感情変化、反復の意味を整理する。\n`;
-  md+=`- SCENE単位の台本を先に完成させ、Verse / Chorus等の音楽構造はその後で割り当てることができる。\n\n`;
+  md+=`- いきなりStylesやメタタグを作らず、まずその人が重視すると選んだ軸だけを整理する。\n`;
+  md+=`- 物語・感情変化・視覚モチーフ・秘密・不可逆な出来事などを、選択されていないのに必須化しない。\n`;
+  md+=`- SCENE-first、定型構成、歌詞主導構成のどれを使うかはSTRUCTURE系の回答に従う。\n\n`;
 
   md+=`# 5. 個人制作ルール\n\n`;
-  const orderedCats=['CORE PHILOSOPHY','CORE IDENTITY','REVEAL','NARRATIVE','SURPRISE','ENDING','CHORUS','VISUAL','VISUAL MOTIF','TIME','REALITY','PROTAGONIST','RELATIONSHIP','VOICE','VOICE SOURCE','SOUND','WORLD SOUND','SILENCE','EMOTION & SOUND','EMOTION ARC','STORY EVENT','SCENE DIRECTION','SCENE PURPOSE','SCENE COUNT','TRANSITION','REPETITION','PRIORITY','TRACEABILITY','LYRICS','INPUT INTERPRETATION','GENRE','REFERENCE','SUNO REALITY GAP','TIME FEEL','OPENING','PRIMARY','STYLES','META TAGS','EXCLUDE','SUNO VERSIONS','PRIMARY PRESET','EXPERIMENTAL PRESET','VOCAL GENDER','WILD CARD','DRAFT CHECK','MORE OPTIONS ADJUST','EXPERIMENT METHOD','GENERATION STAMP','EXPERIMENTAL','GENERATION REVIEW','REVISION','REVISION LOG','PROPOSAL','APPROVAL','USER OUTPUT','OUTPUT','AUTO START','QUESTIONS','QA','SYSTEM DESIGN'];
+  const orderedCats=['CREATIVE AXIS — STRUCTURE','CREATIVE AXIS — EMOTION','CREATIVE AXIS — SCENERY','CREATIVE AXIS — NARRATIVE DENSITY','CREATIVE AXIS — SONG COMPLETION','CREATIVE AXIS — DYNAMIC CONTOUR','CREATIVE AXIS — REALITY GROUNDING','CREATIVE AXIS — VOCAL PRESENCE','CREATIVE AXIS — SONG OVERRIDE','CORE PHILOSOPHY','CORE IDENTITY','REVEAL','NARRATIVE','SURPRISE','ENDING','CHORUS','VISUAL','VISUAL MOTIF','TIME','REALITY','PROTAGONIST','RELATIONSHIP','VOICE','VOICE SOURCE','SOUND','WORLD SOUND','SILENCE','EMOTION & SOUND','EMOTION ARC','STORY EVENT','SCENE DIRECTION','SCENE PURPOSE','SCENE COUNT','TRANSITION','REPETITION','PRIORITY','TRACEABILITY','LYRICS','INPUT INTERPRETATION','GENRE','REFERENCE','SUNO REALITY GAP','TIME FEEL','OPENING','PRIMARY','STYLES','META TAGS','EXCLUDE','SUNO VERSIONS','PRIMARY PRESET','EXPERIMENTAL PRESET','VOCAL GENDER','WILD CARD','DRAFT CHECK','MORE OPTIONS ADJUST','EXPERIMENT METHOD','GENERATION STAMP','EXPERIMENTAL','GENERATION REVIEW','REVISION','REVISION LOG','PROPOSAL','APPROVAL','USER OUTPUT','OUTPUT','AUTO START','QUESTIONS','QA','SYSTEM DESIGN'];
   orderedCats.forEach(cat=>{
     if(!by[cat])return;
     md+=`## ${cat}\n\n`;
@@ -326,23 +343,23 @@ function generateMd(){
     md+='\n';
   });
 
-  md+=`---\n\n# 6. SCENE設計の共通骨格\n\n`;
-  md+=`曲ごとの具体設計では、必要に応じて次を管理する。\n\n`;
-  md+=`- CORE-CONTRADICTION / 中心となる矛盾または核\n`;
-  md+=`- ONE-LINE STORY / 曲中で実際に何が起きるか\n`;
-  md+=`- LISTENER INITIAL PERCEPTION / 最初の認識\n`;
-  md+=`- HIDDEN TRUTH / 最初には知らないこと\n`;
-  md+=`- STORY EVENT / 物語を動かす出来事\n`;
-  md+=`- ONE-TIME EVENT / 一度だけ起きる演出\n`;
-  md+=`- PROTAGONIST / 語り手 / 相手 / 人物関係\n`;
-  md+=`- EMOTION ARC\n`;
-  md+=`- VISUAL / TIME / REALITY LEVEL / CAMERA\n`;
-  md+=`- VOICE SOURCE / VOCAL CAST\n`;
+  md+=`---\n\n# 6. 曲設計の共通骨格\n\n`;
+  md+=`以下は**必要なものだけ使う候補項目**であり、すべてを毎曲必須にしない。個人制作ルールと曲固有意図に従って採用する。\n\n`;
+  md+=`- STRUCTURE / 定型・歌詞主導・自由構成\n`;
+  md+=`- EMOTION STATE / ARC / 感情を変化させるか維持するか\n`;
+  md+=`- SCENERY / 具体情景・抽象印象・情景なし\n`;
+  md+=`- NARRATIVE DENSITY / 起承転結・断片・一場面・物語なし\n`;
+  md+=`- DYNAMIC CONTOUR / 大起伏・緩やか・低起伏\n`;
+  md+=`- REALITY GROUNDING / 日常・詩的現実・幻想\n`;
+  md+=`- VOCAL PRESENCE / 明瞭度・距離・残響\n`;
+  md+=`- CORE-CONTRADICTION / 選択された場合のみ\n`;
+  md+=`- HIDDEN TRUTH / REVEAL ARC / 選択された場合のみ\n`;
+  md+=`- STORY EVENT / ONE-TIME EVENT / 選択された場合のみ\n`;
+  md+=`- PROTAGONIST / VOICE SOURCE / 必要な作品のみ\n`;
+  md+=`- VISUAL / TIME / REALITY LEVEL / CAMERA / 情景・映像設計を使う作品のみ\n`;
   md+=`- SOUND CHARACTERS / WORLD SOUND / SILENCE\n`;
-  md+=`- SCENE PURPOSE / MEANING CHANGE / TRANSITION\n`;
-  md+=`- FIRST IMAGE / FIRST SOUND / FIRST QUESTION\n`;
-  md+=`- FINAL IMAGE / LAST SOUND / FINAL EMOTION\n`;
-  md+=`- Chorus / Refrainごとの意味変化\n\n`;
+  md+=`- Chorus / Refrainの反復意味 / 反復変化を選択した場合\n`;
+  md+=`- FIRST / FINAL IMAGE・SOUND・EMOTION / ラスト設計方針に従う\n\n`;
 
   md+=`# 7. 承認フロー\n\n`;
   md+=`- まずユーザー向けの完成台本を1案または選択された方式で提示する。\n`;
@@ -374,6 +391,8 @@ function generateMd(){
     md+=`- **短い独立した属性句をカンマ \`,\` で区切った1つの連続したStyle Promptとして出力する。**\n`;
     md+=`- 箇条書き・1要素1行・改行だけで属性を区切る形式を標準にしない。\n`;
     md+=`- 同義語を重複させず、作品固有の「普通と違うところ」へ文字数を使う。\n`;
+    md+=`- 世界観が日常・現実寄りの場合、ambient / cinematic / ethereal / neo-classical等の語が意図せず幻想化を招かないか確認する。\n`;
+    md+=`- Vocal Presenceで明瞭さを重視した場合、front-and-center / dry / clear diction等の必要な方向をStyles・Excludeへ反映し、静かな曲だからという理由だけで声を遠くしない。\n`;
     const p52=answerOf(52,'Stylesには曲全体を支配するルールだけを圧縮し、局所演出はLyrics内メタタグへ任せる。');
     md+=`- ${p52}\n`;
     const p54=answerOf(54,'Stylesは基本優先順位を持ちつつ、作品固有の重要要素へ文字数を重点配分する。');
@@ -448,6 +467,8 @@ function generateMd(){
     md+=`- ${autoAdj}\n`;
     const oneVar=answerOf('58C','More Optionsの比較検証では、原則として一回の比較につき主要設定を一つだけ変更する。');
     md+=`- ${oneVar}\n`;
+    const crossLayer=answerOf('58E','診断目的の比較ではStyles / Exclude / More Optionsなど異なるレイヤーを原則同時変更しない。完成度を早く上げる改善パスでは複数変更を許可するが、因果分離できないことを記録する。');
+    md+=`- ${crossLayer}\n`;
     md+=`- 普通すぎる場合はまずStyles / Excludeの弱さを確認し、それでも必要ならWeirdness +10、次にVarietyを1段階上げる。\n`;
     md+=`- 指示から離れすぎる場合はStyle Influence +10、Varietyを1段階下げる、Weirdness -10の順で検討する。\n`;
     md+=`- 固すぎる場合はStyle Influence -10、Weirdness +10、Varietyを1段階上げる順で検討する。\n\n`;
@@ -462,7 +483,9 @@ function generateMd(){
   md+=`AIはユーザーへ最終データを出す前に内部QAを行う。\n\n`;
   md+=`- 歌詞本文を無断変更していないか\n`;
   md+=`- 作者の明示意図を上書きしていないか\n`;
-  md+=`- 物語・感情・SCENE PURPOSEが実装に残っているか\n`;
+  md+=`- 選択された独立制作軸が実装に反映されているか\n`;
+  md+=`- 選択されていない物語性・感情変化・幻想性をAIが勝手に追加していないか\n`;
+  md+=`- 曲固有の世界観が、ジャンル語や音響語によって別世界へ変質していないか\n`;
   md+=`- StylesとLyricsメタタグが矛盾していないか\n`;
   md+=`- Stylesが1000文字以内か\n`;
   md+=`- Stylesが**カンマ区切りの短い属性句**になっているか\n`;
@@ -526,7 +549,7 @@ function generateMd(){
     if(ch) md+=`- Q${q.n} ${q.t} → ${'ABCD'[answers[q.n]]}. ${ch.title}\n`;
   });
 
-  md+=`\n---\nGenerated by SONG DIRECTION SYSTEM BUILDER v0.4 ADAPTIVE (JACKPOT031 v2.2 BASE)\n`;
+  md+=`\n---\nGenerated by SONG DIRECTION SYSTEM BUILDER v0.5 (INDEPENDENT AXES / JACKPOT031 v2.2 TECH BASE)\n`;
   return md;
 }
 function finish(){generated=generateMd();$('#quiz').classList.add('hidden');$('#result').classList.remove('hidden');$('#mdPreview').value=generated;$('#resultText').textContent=`${$('#systemName').value||$('#creator').value+' SONG DIRECTION SYSTEM'} を生成しました。${mode==='quick'?'QUICK':'DEEP ADAPTIVE'} MODE / ${list.length}問（この回答ルート）。`;const c=$('#chips');c.innerHTML='';keySummary().forEach(x=>{const s=document.createElement('span');s.className='chip';s.textContent=x;c.appendChild(s)});saveProgress();window.scrollTo({top:0,behavior:'smooth'})}
@@ -534,7 +557,7 @@ function download(content,name,type='text/markdown'){const blob=new Blob([conten
 $('#downloadMd').onclick=()=>{const name=safeName($('#systemName').value||($('#creator').value+' SONG DIRECTION SYSTEM'))+`_v${$('#version').value||'1.0'}.md`;download($('#mdPreview').value,name)};
 $('#copyMd').onclick=async()=>{await navigator.clipboard.writeText($('#mdPreview').value);const b=$('#copyMd');const t=b.textContent;b.textContent='コピーしました';setTimeout(()=>b.textContent=t,1300)};
 $('#downloadJson').onclick=()=>{const data={mode:mode==='deep'?'deep-adaptive':mode,questionCount:list.length,creator:$('#creator').value,systemName:$('#systemName').value,target:$('#target').value,version:$('#version').value,answers:list.map(q=>({id:q.n,question:q.t,choice:'ABCD'[answers[q.n]],answer:chosen(q)?.title,rule:chosen(q)?.rule}))};download(JSON.stringify(data,null,2),safeName($('#creator').value)+'_song_direction_answers.json','application/json')};
-$('#restart').onclick=()=>{if(confirm('回答をリセットして最初からやり直しますか？')){localStorage.removeItem('sds_builder_progress_v04');location.reload()}};
+$('#restart').onclick=()=>{if(confirm('回答をリセットして最初からやり直しますか？')){localStorage.removeItem('sds_builder_progress_v05');location.reload()}};
 </script>
 </body>
 </html>
